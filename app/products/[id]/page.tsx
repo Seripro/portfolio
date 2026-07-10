@@ -107,14 +107,32 @@ export default async function Page({
       {product.architecture_diagram && (
         <div className="mt-8">
           <h2 className="text-xl font-semibold text-gray-900">構成図</h2>
-          <div className="mt-4 overflow-hidden rounded-lg border border-gray-200">
-            <Image
-              src={product.architecture_diagram.url}
-              alt={`${product.title} 構成図`}
-              width={product.architecture_diagram.width}
-              height={product.architecture_diagram.height}
-              className="w-full"
-            />
+          <div className="relative mt-4 aspect-[16/9] overflow-hidden rounded-lg border border-gray-200">
+            {(() => {
+              const isSvg = product.architecture_diagram.url.endsWith(".svg");
+              if (isSvg) {
+                return (
+                  <Image
+                    src={product.architecture_diagram.url}
+                    alt={`${product.title} 構成図`}
+                    fill
+                    unoptimized
+                    sizes="100vw"
+                    className="object-contain"
+                  />
+                );
+              }
+
+              return (
+                <Image
+                  src={product.architecture_diagram.url}
+                  alt={`${product.title} 構成図`}
+                  width={product.architecture_diagram.width}
+                  height={product.architecture_diagram.height}
+                  className="w-full"
+                />
+              );
+            })()}
           </div>
         </div>
       )}
