@@ -5,7 +5,7 @@ import type { Product } from "@/types/microcms";
 export default function ProductCard({ product }: { product: Product }) {
   return (
     <Link
-      href={`/products/${product.id}`}
+      href={`/projects/${product.id}`}
       className="group block overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-md"
     >
       <div className="relative aspect-video overflow-hidden bg-gray-100">
