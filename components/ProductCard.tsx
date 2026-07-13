@@ -21,9 +21,10 @@ export default function ProductCard({ product }: { product: Product }) {
         <h2 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
           {product.title}
         </h2>
-        <p className="mt-1 text-sm text-gray-600 line-clamp-2">
-          {product.summary}
-        </p>
+        <div
+          className="mt-1 text-sm text-gray-600 line-clamp-2"
+          dangerouslySetInnerHTML={{ __html: product.summary }}
+        />
         <div className="mt-3 flex flex-wrap gap-1.5">
           {product.stack.split(",").map((tech) => (
             <span
