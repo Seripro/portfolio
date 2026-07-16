@@ -11,7 +11,8 @@ export default function Page() {
           </span>
         </h1>
         <p className="mt-4 text-lg leading-relaxed text-gray-600">
-          横浜国立大学 理工学部 数物・電子情報系学科 物理工学EP（27卒）。
+          横浜国立大学 理工学部 数物・電子情報系学科 物理工学EP
+          <br />
           バックエンド・フルスタックエンジニアを目指し、Web・モバイルアプリ開発に取り組んでいます。
         </p>
       </section>
@@ -25,31 +26,6 @@ export default function Page() {
           各ページでは制作物の詳細やスキルシートを確認できます。
         </p>
       </section>
-
-      <nav className="mt-12 grid gap-4 sm:grid-cols-2">
-        <Link
-          href="/projects"
-          className="group rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
-        >
-          <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
-            Works
-          </h3>
-          <p className="mt-1 text-sm text-gray-600">
-            制作物の一覧を見る
-          </p>
-        </Link>
-        <Link
-          href="/skills"
-          className="group rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
-        >
-          <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
-            Skills
-          </h3>
-          <p className="mt-1 text-sm text-gray-600">
-            スキルシートを見る
-          </p>
-        </Link>
-      </nav>
     </div>
   );
 }
