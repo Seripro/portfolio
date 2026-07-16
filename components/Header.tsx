@@ -10,6 +10,14 @@ export default function Header() {
         <ul className="flex gap-6 text-sm font-medium text-gray-600">
           <li>
             <Link
+              href="/"
+              className="hover:text-gray-900 transition-colors"
+            >
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link
               href="/projects"
               className="hover:text-gray-900 transition-colors"
             >
