@@ -16,6 +16,7 @@ export type Product = {
   app_url?: string;
   qiita_url?: string;
   duration?: string;
+  qiita_error_articles?: { fieldId: string; title: string; url: string }[];
 };
 
 export type SkillCategory =
