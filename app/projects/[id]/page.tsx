@@ -19,13 +19,25 @@ export default async function Page({
   return (
     <article className="mx-auto max-w-3xl px-6 py-12">
       <h1 className="text-3xl font-bold text-gray-900">{product.title}</h1>
+
+      <div className="mt-14 overflow-hidden rounded-lg">
+        <Image
+          src={product.thumbnail.url}
+          alt={product.title}
+          width={product.thumbnail.width}
+          height={product.thumbnail.height}
+          className="w-full"
+        />
+      </div>
+
+      <h2 className="mt-16 text-xl font-semibold text-gray-900">概要</h2>
       <div
-        className="prose prose-gray mt-2 max-w-none text-gray-600"
+        className="prose prose-gray mt-3 max-w-none leading-relaxed text-gray-600"
         dangerouslySetInnerHTML={{ __html: product.summary }}
       />
 
       {product.duration && (
-        <p className="mt-4 inline-flex items-center gap-2 rounded-md border border-gray-200 bg-gray-50 px-4 py-2 text-base font-medium text-gray-700">
+        <p className="mt-16 inline-flex items-center gap-2 rounded-md border border-gray-200 bg-gray-50 px-4 py-2 text-base font-medium text-gray-700">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
@@ -42,7 +54,7 @@ export default async function Page({
         </p>
       )}
 
-      <div className="mt-4 flex flex-wrap gap-2">
+      <div className="mt-14 flex flex-wrap gap-2">
         {product.stack.split(",").map((tech) => (
           <span
             key={tech.trim()}
@@ -53,7 +65,7 @@ export default async function Page({
         ))}
       </div>
 
-      <div className="mt-6 flex flex-wrap gap-3">
+      <div className="mt-16 flex flex-wrap gap-3">
         {product.github_url && (
           <a
             href={product.github_url}
@@ -119,17 +131,7 @@ export default async function Page({
         )}
       </div>
 
-      <div className="mt-8 overflow-hidden rounded-lg">
-        <Image
-          src={product.thumbnail.url}
-          alt={product.title}
-          width={product.thumbnail.width}
-          height={product.thumbnail.height}
-          className="w-full"
-        />
-      </div>
-
-      <div className="mt-8">
+      <div className="mt-24">
         <h2 className="text-xl font-semibold text-gray-900">デモ</h2>
         {(() => {
           const targetImage = product.demo_image || product.thumbnail;
@@ -150,7 +152,7 @@ export default async function Page({
       </div>
 
       {product.architecture_diagram && (
-        <div className="mt-8">
+        <div className="mt-24">
           <h2 className="text-xl font-semibold text-gray-900">構成図</h2>
           <div className="relative mt-4 aspect-[16/9] overflow-hidden rounded-lg border border-gray-200">
             {(() => {
@@ -183,7 +185,7 @@ export default async function Page({
       )}
 
       <div
-        className="prose prose-gray mt-8 max-w-none"
+        className="prose prose-gray mt-24 max-w-none"
         dangerouslySetInnerHTML={{ __html: product.content }}
       />
     </article>
