@@ -10,6 +10,7 @@ export type Product = {
   stack: string;
   demo_image?: { url: string; width: number; height: number };
   architecture_diagram?: { url: string; width: number; height: number };
+  purpose: string;
   content: string;
   github_url?: string;
   app_url?: string;
