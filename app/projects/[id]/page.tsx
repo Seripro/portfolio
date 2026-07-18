@@ -36,6 +36,12 @@ export default async function Page({
         dangerouslySetInnerHTML={{ __html: product.summary }}
       />
 
+      <h2 className="mt-16 text-xl font-semibold text-gray-900">目的・背景</h2>
+      <div
+        className="prose prose-gray mt-3 max-w-none leading-relaxed text-gray-600"
+        dangerouslySetInnerHTML={{ __html: product.purpose }}
+      />
+
       {product.duration && (
         <p className="mt-16 inline-flex items-center gap-2 rounded-md border border-gray-200 bg-gray-50 px-4 py-2 text-base font-medium text-gray-700">
           <svg
