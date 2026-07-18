@@ -194,6 +194,26 @@ export default async function Page({
         className="prose prose-gray mt-24 max-w-none"
         dangerouslySetInnerHTML={{ __html: product.content }}
       />
+
+      {product.qiita_error_articles && product.qiita_error_articles.length > 0 && (
+        <div className="mt-24">
+          <h2 className="text-2xl font-bold text-gray-900">その他リンク</h2>
+          <ul className="mt-4 space-y-2">
+            {product.qiita_error_articles.map((article) => (
+              <li key={article.url}>
+                <a
+                  href={article.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block truncate text-blue-400 underline decoration-blue-200 underline-offset-2 transition-colors hover:text-blue-600"
+                >
+                  {article.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </article>
   );
 }
