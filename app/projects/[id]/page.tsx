@@ -125,20 +125,20 @@ export default async function Page({
         )}
       </div>
 
-      <h2 className="mt-16 text-xl font-semibold text-gray-900">概要</h2>
+      <h2 className="mt-16 text-2xl font-bold text-gray-900">概要</h2>
       <div
         className="prose prose-gray mt-3 max-w-none leading-relaxed text-gray-600"
         dangerouslySetInnerHTML={{ __html: product.summary }}
       />
 
-      <h2 className="mt-16 text-xl font-semibold text-gray-900">目的・背景</h2>
+      <h2 className="mt-16 text-2xl font-bold text-gray-900">目的・背景</h2>
       <div
         className="prose prose-gray mt-3 max-w-none leading-relaxed text-gray-600"
         dangerouslySetInnerHTML={{ __html: product.purpose }}
       />
 
       <div className="mt-24">
-        <h2 className="text-xl font-semibold text-gray-900">デモ</h2>
+        <h2 className="text-2xl font-bold text-gray-900">デモ</h2>
         {(() => {
           const targetImage = product.demo_image || product.thumbnail;
           const isGif = targetImage.url.endsWith(".gif");
@@ -159,7 +159,7 @@ export default async function Page({
 
       {product.architecture_diagram && (
         <div className="mt-24">
-          <h2 className="text-xl font-semibold text-gray-900">構成図</h2>
+          <h2 className="text-2xl font-bold text-gray-900">構成図</h2>
           <div className="relative mt-4 aspect-[16/9] overflow-hidden rounded-lg border border-gray-200">
             {(() => {
               const isSvg = product.architecture_diagram.url.endsWith(".svg");
