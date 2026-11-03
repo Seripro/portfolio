@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { markdownToPlainText } from "@/lib/markdown";
 import type { Product } from "@/types/microcms";
 
 export default function ProductCard({ product }: { product: Product }) {
@@ -21,10 +22,9 @@ export default function ProductCard({ product }: { product: Product }) {
         <h2 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
           {product.title}
         </h2>
-        <div
-          className="mt-1 text-sm text-gray-600 line-clamp-2"
-          dangerouslySetInnerHTML={{ __html: product.summary }}
-        />
+        <p className="mt-1 line-clamp-2 text-sm text-gray-600">
+          {markdownToPlainText(product.summary)}
+        </p>
         <div className="mt-3 flex flex-wrap gap-1.5">
           {product.stack.split(",").map((tech) => (
             <span
