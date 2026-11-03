@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { getProduct, getProducts } from "@/lib/microcms";
+import MarkdownContent from "@/components/MarkdownContent";
 
 export async function generateStaticParams() {
   const { contents } = await getProducts();
@@ -126,16 +127,18 @@ export default async function Page({
       </div>
 
       <h2 className="mt-16 text-2xl font-bold text-gray-900">概要</h2>
-      <div
+      <MarkdownContent
         className="prose prose-gray mt-3 max-w-none leading-relaxed text-gray-600"
-        dangerouslySetInnerHTML={{ __html: product.summary }}
-      />
+      >
+        {product.summary}
+      </MarkdownContent>
 
       <h2 className="mt-16 text-2xl font-bold text-gray-900">目的・背景</h2>
-      <div
+      <MarkdownContent
         className="prose prose-gray mt-3 max-w-none leading-relaxed text-gray-600"
-        dangerouslySetInnerHTML={{ __html: product.purpose }}
-      />
+      >
+        {product.purpose}
+      </MarkdownContent>
 
       <div className="mt-24">
         <h2 className="text-2xl font-bold text-gray-900">デモ</h2>
@@ -190,10 +193,11 @@ export default async function Page({
         </div>
       )}
 
-      <div
+      <MarkdownContent
         className="prose prose-gray mt-24 max-w-none"
-        dangerouslySetInnerHTML={{ __html: product.content }}
-      />
+      >
+        {product.content}
+      </MarkdownContent>
 
       {product.qiita_error_articles && product.qiita_error_articles.length > 0 && (
         <div className="mt-24">
