@@ -1,6 +1,5 @@
 import { unstable_cache } from "next/cache";
 import { fetchOpenGraph } from "@/lib/og";
-import { getOpenGraphFallback } from "@/lib/og-fallback";
 
 const getCachedOpenGraph = unstable_cache(fetchOpenGraph, ["open-graph"], {
   revalidate: 21600,
@@ -14,10 +13,18 @@ export async function GET(request: Request) {
   }
 
   try {
-    let data;
-    try {
-      data = await getCachedOpenGraph(url);
-    } catch (error) {
+    const data = await getCachedOpenGraph(url);
+    if (!data) {
+      return Response.json({ error: "OGP not found" }, { status: 404 });
+    }
+
+    return Response.json(data, {
+      headers: {
+        "Cache-Control": "public, max-age=3600, s-maxage=21600, stale-while-revalidate=86400",
+        "X-Content-Type-Options": "nosniff",
+      },
+    });
+  } catch (error) {
       // Do not log URLs, query strings, response bodies or arbitrary errors.
       const message = error instanceof Error ? error.message : "";
       const status = /^Unexpected response status: (\d{3})$/.exec(message)?.[1];
@@ -30,21 +37,6 @@ export async function GET(request: Request) {
         reason: ["Response is too large", "Response is not HTML", "Too many redirects"].includes(message)
           ? message : "Fetch rejected or failed",
       });
-      data = getOpenGraphFallback(url);
-      if (!data) throw error;
-    }
-    data ??= getOpenGraphFallback(url);
-    if (!data) {
-      return Response.json({ error: "OGP not found" }, { status: 404 });
-    }
-
-    return Response.json(data, {
-      headers: {
-        "Cache-Control": "public, max-age=3600, s-maxage=21600, stale-while-revalidate=86400",
-        "X-Content-Type-Options": "nosniff",
-      },
-    });
-  } catch {
     return Response.json({ error: "Unable to fetch OGP" }, { status: 422 });
   }
 }
