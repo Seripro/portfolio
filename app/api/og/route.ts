@@ -24,7 +24,19 @@ export async function GET(request: Request) {
         "X-Content-Type-Options": "nosniff",
       },
     });
-  } catch {
+  } catch (error) {
+      // Do not log URLs, query strings, response bodies or arbitrary errors.
+      const message = error instanceof Error ? error.message : "";
+      const status = /^Unexpected response status: (\d{3})$/.exec(message)?.[1];
+      const code = error && typeof error === "object" && "code" in error
+        && typeof error.code === "string" && /^[A-Z0-9_]{1,64}$/.test(error.code)
+        ? error.code : undefined;
+      console.warn("OGP fetch failed", {
+        status: status ? Number(status) : undefined,
+        code,
+        reason: ["Response is too large", "Response is not HTML", "Too many redirects"].includes(message)
+          ? message : "Fetch rejected or failed",
+      });
     return Response.json({ error: "Unable to fetch OGP" }, { status: 422 });
   }
 }
