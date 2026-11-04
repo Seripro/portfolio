@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio
 
-## Getting Started
+![ポートフォリオサイトのスクリーンショット](./public/portfolio-screenshot.png)
 
-First, run the development server:
+## 概要
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+芹口京悟のポートフォリオサイトです。
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+これまでに制作したプロダクト、技術スキル、経歴やエンジニアとして目指していることを掲載しています。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 公開URL
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+[ポートフォリオを見る](https://portfolio-one-navy-86.vercel.app/)
 
-## Learn More
+## ページ
 
-To learn more about Next.js, take a look at the following resources:
+- **Home**：プロフィールと各種SNSへのリンク
+- **About**：自己紹介、経歴、目指しているエンジニア像
+- **Works**：これまでに制作したプロダクトの一覧と詳細
+- **Skills**：技術スキルと習熟度
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 技術スタック
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| 分類           | 使用技術                                    |
+| -------------- | ------------------------------------------- |
+| フレームワーク | Next.js 16（App Router）                    |
+| UI             | React 19                                    |
+| 言語           | TypeScript                                  |
+| スタイリング   | Tailwind CSS 4、Tailwind CSS Typography     |
+| ヘッドレスCMS  | microCMS                                    |
+| コンテンツ表示 | React Markdown、remark-gfm、rehype-sanitize |
