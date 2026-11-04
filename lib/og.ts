@@ -221,7 +221,9 @@ function requestOnce(
           "Accept-Encoding": "identity",
           "User-Agent": "PortfolioLinkPreview/1.0",
         },
+        family: resolved.family,
         lookup: pinnedLookup,
+        servername: url.hostname,
         signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
       },
       (response) => {
