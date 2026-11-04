@@ -52,7 +52,7 @@ function isPublicIpv6(address: string) {
   if (value === null) return false;
 
   const mappedPrefix = BigInt("0xffff");
-  if ((value >> BigInt(32)) === mappedPrefix) {
+  if (value >> BigInt(32) === mappedPrefix) {
     const ipv4 = Number(value & BigInt("0xffffffff"));
     return isPublicIpv4(
       [24, 16, 8, 0].map((shift) => (ipv4 >>> shift) & 255).join("."),
@@ -113,7 +113,8 @@ function parseExternalUrl(value: string) {
   if (url.protocol !== "http:" && url.protocol !== "https:") {
     throw new Error("Unsupported URL protocol");
   }
-  if (url.username || url.password) throw new Error("URL credentials are not allowed");
+  if (url.username || url.password)
+    throw new Error("URL credentials are not allowed");
   if (url.port && url.port !== "80" && url.port !== "443") {
     throw new Error("Non-standard ports are not allowed");
   }
@@ -143,12 +144,18 @@ async function resolvePublicAddress(
     };
   }
 
-  const addresses = await lookup(normalizedHostname, { all: true, verbatim: true });
-  if (addresses.length === 0 || addresses.some(({ address }) => !isPublicIp(address))) {
+  const addresses = await lookup(normalizedHostname, {
+    all: true,
+    verbatim: true,
+  });
+  if (
+    addresses.length === 0 ||
+    addresses.some(({ address }) => !isPublicIp(address))
+  ) {
     throw new Error("Hostname resolves to a non-public IP address");
   }
 
-  const selected = addresses[0];
+  const selected = addresses.find(({ family }) => family === 4) ?? addresses[0];
   if (selected.family !== 4 && selected.family !== 6) {
     throw new Error("Unsupported address family");
   }
@@ -159,13 +166,18 @@ async function resolvePublicAddress(
 async function requestHtml(url: URL): Promise<{ body: string; finalUrl: URL }> {
   let currentUrl = url;
 
-  for (let redirectCount = 0; redirectCount <= MAX_REDIRECTS; redirectCount += 1) {
+  for (
+    let redirectCount = 0;
+    redirectCount <= MAX_REDIRECTS;
+    redirectCount += 1
+  ) {
     currentUrl = parseExternalUrl(currentUrl.href);
     const resolved = await resolvePublicAddress(currentUrl.hostname);
     const response = await requestOnce(currentUrl, resolved);
 
     if (response.status >= 300 && response.status < 400 && response.location) {
-      if (redirectCount === MAX_REDIRECTS) throw new Error("Too many redirects");
+      if (redirectCount === MAX_REDIRECTS)
+        throw new Error("Too many redirects");
       currentUrl = new URL(response.location, currentUrl);
       continue;
     }
@@ -254,13 +266,17 @@ function absoluteUrl(value: string | undefined, baseUrl: URL) {
   if (!value) return null;
   try {
     const url = new URL(value, baseUrl);
-    return url.protocol === "http:" || url.protocol === "https:" ? url.href : null;
+    return url.protocol === "http:" || url.protocol === "https:"
+      ? url.href
+      : null;
   } catch {
     return null;
   }
 }
 
-export async function fetchOpenGraph(value: string): Promise<OpenGraphData | null> {
+export async function fetchOpenGraph(
+  value: string,
+): Promise<OpenGraphData | null> {
   const initialUrl = parseExternalUrl(value);
   const { body, finalUrl } = await requestHtml(initialUrl);
   const $ = load(body);
@@ -275,11 +291,15 @@ export async function fetchOpenGraph(value: string): Promise<OpenGraphData | nul
   return {
     url: finalUrl.href,
     title: title.slice(0, 300),
-    description: (property("og:description") || named("description") || null)?.slice(
-      0,
-      500,
-    ) ?? null,
-    image: absoluteUrl(property("og:image") || property("og:image:url"), finalUrl),
+    description:
+      (property("og:description") || named("description") || null)?.slice(
+        0,
+        500,
+      ) ?? null,
+    image: absoluteUrl(
+      property("og:image") || property("og:image:url"),
+      finalUrl,
+    ),
     domain: finalUrl.hostname.replace(/^www\./, ""),
   };
 }
