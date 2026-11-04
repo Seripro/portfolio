@@ -1,5 +1,6 @@
 export function normalizeMarkdown(markdown: string) {
   return markdown
+    .replace(/<a\b[^>]*>\s*<\/a>/gi, "")
     .replace(/<br\s*\/?\s*>/gi, "\n")
     .replace(
       /<\/?(?:p|div|section|article|header|footer|li|blockquote)\b[^>]*>/gi,

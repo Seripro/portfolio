@@ -3,12 +3,19 @@ import type { Plugin } from "unified";
 
 type Parent = Root | Paragraph;
 
-function isStandaloneUrl(paragraph: Paragraph, markdown: string) {
-  if (paragraph.children.length !== 1) return null;
+function isTextLink(node: Paragraph["children"][number]): node is Link {
+  return (
+    node.type === "link" &&
+    node.children.length === 1 &&
+    node.children[0].type === "text"
+  );
+}
 
-  const child = paragraph.children[0];
-  if (child.type !== "link" || child.children.length !== 1) return null;
-  if (child.children[0].type !== "text") return null;
+function isStandaloneUrl(paragraph: Paragraph, markdown: string) {
+  const links = paragraph.children.filter(isTextLink);
+  if (links.length !== 1) return null;
+
+  const child = links[0];
   if (!child.url.startsWith("http://") && !child.url.startsWith("https://")) {
     return null;
   }
@@ -17,13 +24,15 @@ function isStandaloneUrl(paragraph: Paragraph, markdown: string) {
   const end = paragraph.position?.end.offset;
   if (start === undefined || end === undefined) return null;
 
-  const source = markdown.slice(start, end).trim();
-  const unwrappedSource =
-    source.startsWith("<") && source.endsWith(">")
-      ? source.slice(1, -1)
-      : source;
+  const source = markdown
+    .slice(start, end)
+    .replace(/<[^>]*>/g, "")
+    .trim();
 
-  return unwrappedSource === child.url ? (child as Link).url : null;
+  if (source !== child.url) return null;
+
+  paragraph.children = [child];
+  return child.url;
 }
 
 const remarkLinkCards: Plugin<[], Root> = () => (tree, file) => {
