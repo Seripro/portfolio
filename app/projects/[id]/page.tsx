@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { getProduct, getProducts } from "@/lib/microcms";
 import MarkdownContent from "@/components/MarkdownContent";
+import LinkCard from "@/components/LinkCard";
 
 export async function generateStaticParams() {
   const { contents } = await getProducts();
@@ -127,16 +128,12 @@ export default async function Page({
       </div>
 
       <h2 className="mt-16 text-2xl font-bold text-gray-900">概要</h2>
-      <MarkdownContent
-        className="prose prose-gray mt-3 max-w-none leading-relaxed text-gray-600"
-      >
+      <MarkdownContent className="prose prose-gray mt-3 max-w-none leading-relaxed text-gray-600">
         {product.summary}
       </MarkdownContent>
 
       <h2 className="mt-16 text-2xl font-bold text-gray-900">目的・背景</h2>
-      <MarkdownContent
-        className="prose prose-gray mt-3 max-w-none leading-relaxed text-gray-600"
-      >
+      <MarkdownContent className="prose prose-gray mt-3 max-w-none leading-relaxed text-gray-600">
         {product.purpose}
       </MarkdownContent>
 
@@ -193,31 +190,21 @@ export default async function Page({
         </div>
       )}
 
-      <MarkdownContent
-        className="prose prose-gray mt-24 max-w-none"
-      >
+      <MarkdownContent className="prose prose-gray mt-24 max-w-none">
         {product.content}
       </MarkdownContent>
 
-      {product.qiita_error_articles && product.qiita_error_articles.length > 0 && (
-        <div className="mt-24">
-          <h2 className="text-2xl font-bold text-gray-900">その他リンク</h2>
-          <ul className="mt-4 space-y-2">
-            {product.qiita_error_articles.map((article) => (
-              <li key={article.url}>
-                <a
-                  href={article.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block truncate text-blue-400 underline decoration-blue-200 underline-offset-2 transition-colors hover:text-blue-600"
-                >
-                  {article.title}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      {product.qiita_error_articles &&
+        product.qiita_error_articles.length > 0 && (
+          <div className="mt-24">
+            <h2 className="text-2xl font-bold text-gray-900">その他リンク</h2>
+            <div className="mt-4 space-y-4">
+              {product.qiita_error_articles.map((article) => (
+                <LinkCard key={article.url} href={article.url} />
+              ))}
+            </div>
+          </div>
+        )}
     </article>
   );
 }
