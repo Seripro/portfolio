@@ -2,6 +2,7 @@ import Image from "next/image";
 import { getProduct, getProducts } from "@/lib/microcms";
 import MarkdownContent from "@/components/MarkdownContent";
 import LinkCard from "@/components/LinkCard";
+import BackToProjectsLink from "@/components/BackToProjectsLink";
 
 export async function generateStaticParams() {
   const { contents } = await getProducts();
@@ -20,7 +21,9 @@ export default async function Page({
 
   return (
     <article className="mx-auto max-w-3xl px-6 py-12">
-      <h1 className="text-3xl font-bold text-gray-900">{product.title}</h1>
+      <BackToProjectsLink />
+
+      <h1 className="mt-8 text-3xl font-bold text-gray-900">{product.title}</h1>
 
       <div className="mt-14 overflow-hidden rounded-lg">
         <Image
@@ -205,6 +208,10 @@ export default async function Page({
             </div>
           </div>
         )}
+
+      <div className="mt-24">
+        <BackToProjectsLink />
+      </div>
     </article>
   );
 }
