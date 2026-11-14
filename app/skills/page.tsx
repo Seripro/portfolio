@@ -27,6 +27,10 @@ const CATEGORY_ORDER: SkillCategory[] = [
   "その他ツール",
 ];
 
+const CATEGORY_LABELS: Partial<Record<SkillCategory, string>> = {
+  言語: "言語・フレームワーク",
+};
+
 function groupByCategory(skills: Skill[]) {
   const grouped: Record<string, Skill[]> = {};
   for (const category of CATEGORY_ORDER) {
@@ -82,7 +86,7 @@ export default async function Page() {
           return (
             <section key={category}>
               <h2 className="text-xl font-semibold text-gray-900">
-                {category}
+                {CATEGORY_LABELS[category] ?? category}
               </h2>
               <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 {categorySkills.map((skill) => (
