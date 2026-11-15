@@ -26,6 +26,14 @@ export default function MarkdownContent({
         {children}
       </code>
     ),
+    pre: ({ children, ...props }) => (
+      <pre
+        {...props}
+        className="not-prose my-6 overflow-x-auto rounded-lg bg-gray-900 p-4 text-sm leading-6 text-gray-100 [&_code]:bg-transparent [&_code]:p-0 [&_code]:text-inherit"
+      >
+        {children}
+      </pre>
+    ),
     table: ({ children: tableChildren }) => (
       <div className="my-6 w-full overflow-x-auto">
         <table>{tableChildren}</table>
