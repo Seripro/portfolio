@@ -39,6 +39,20 @@ function restoreRichTextCodeBlocks(markdown: string) {
 export function normalizeMarkdown(markdown: string) {
   const normalizeText = (text: string) =>
     text
+    // When Markdown is pasted into the rich-text editor, its automatic
+    // linkifier can absorb the closing `)` and following prose into href.
+    // Restore `[label](URL)following prose` from that malformed anchor.
+    .replace(
+      /\]\(\s*<a\b[^>]*\bhref=["'](https?:\/\/[^)\s"']+)\)([^"']*)["'][^>]*>[\s\S]*?<\/a>/gi,
+      "]($1)$2",
+    )
+    // microCMS may auto-link a pasted URL even when it is already inside a
+    // Markdown link destination: [label](<a href="…">…</a>). Convert that
+    // nested HTML link back to a regular Markdown destination before parsing.
+    .replace(
+      /\]\(\s*<a\b[^>]*\bhref=["']([^"']+)["'][^>]*>[\s\S]*?<\/a>\s*\)/gi,
+      "]($1)",
+    )
     .replace(/<a\b[^>]*>\s*<\/a>/gi, "")
     .replace(/<br\s*\/?\s*>/gi, "\n")
     .replace(
