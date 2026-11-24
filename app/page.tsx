@@ -102,7 +102,7 @@ export default function Page() {
                   className="group flex size-11 items-center justify-center rounded-full text-gray-600 outline-none transition-colors duration-200 hover:bg-indigo-50 hover:text-indigo-600 focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2"
                   aria-label={`${social.name}のプロフィールを新しいタブで開く`}
                 >
-                  <span className="size-6 transition-transform duration-200 group-hover:-translate-y-0.5">
+                  <span className="flex size-6 items-center justify-center transition-transform duration-200 group-hover:-translate-y-0.5">
                     {social.icon}
                   </span>
                 </a>
