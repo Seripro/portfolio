@@ -53,6 +53,18 @@ const socialLinks = [
       </svg>
     ),
   },
+  {
+    name: "Speaker Deck",
+    href: "https://speakerdeck.com/keikeigo",
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          fill="currentColor"
+          d="M3 3h18v13H3V3Zm2 2v9h14V5H5Zm2 2h10v2H7V7Zm0 4h6v2H7v-2Zm3 7h4v3h-4v-3Z"
+        />
+      </svg>
+    ),
+  },
 ] as const;
 
 export default function Page() {
